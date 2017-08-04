@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
-  resources :quizzes
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root "sessions#new"
+  resources :users, except: [:index]
+  resources :sessions, only: [:new, :create, :destroy]
+  get "/sessions" => "sessions#destroy"
+  resources :routes
+  resources :quizzes do
+    resources :questions do
+      resources :answers
+    end
+  end
+
 end

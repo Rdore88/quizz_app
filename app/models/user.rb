@@ -3,9 +3,8 @@ class User < ApplicationRecord
   has_many :results
   has_many :answers, through: :results
   has_many :quizes, through: :results
-  before_save :default_values
-
-  def default_values
-    self.admin = false
-  end
+  validates :admin, defaults: false
+  validates :email, presence: true
+  validates :email, uniqueness: true
+  validates :name, presence: true
 end
