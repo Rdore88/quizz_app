@@ -2,5 +2,21 @@
 
 <%= render 'form', quiz: @quiz %>
 
+<%= link_to "Create Question", new_quiz_question_path(@quiz) %>
+
+
+<% @quiz.questions.each do |question|%>
+  <%= question.question %>
+  <%= link_to "Create New Answer", new_quiz_question_answer_path(@quiz, question) %>
+  <% question.answers.each do |answer| %>
+    <%= answer.answer %>
+    <% if answer.correct %>
+      <span>(correct answer)</span>
+    <% end %>
+  <% end %>
+<% end %>
+
+<br><br>
+
 <%= link_to 'Show', @quiz %> |
 <%= link_to 'Back', quizzes_path %>

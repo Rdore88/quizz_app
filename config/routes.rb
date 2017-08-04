@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :users, except: [:index]
   resources :sessions, only: [:new, :create, :destroy]
   get "/sessions" => "sessions#destroy"
-  resources :routes
+  resources :results
   resources :quizzes do
     resources :questions do
       resources :answers

@@ -1,6 +1,5 @@
 class Answer < ApplicationRecord
   belongs_to :question
-  has_may :results
+  has_many :results
   validates :answer, presence: true
-  validtes :correct, 
 end
