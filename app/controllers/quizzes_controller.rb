@@ -1,5 +1,6 @@
 class QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :edit, :update, :destroy]
+  before_action :admin!, except: [:show]
 
   # GET /quizzes
   # GET /quizzes.json
@@ -25,14 +26,13 @@ class QuizzesController < ApplicationController
   # POST /quizzes.json
   def create
     @quiz = Quiz.new(quiz_params)
+    @quiz.user_id = current_user.id
 
     respond_to do |format|
       if @quiz.save
         format.html { redirect_to @quiz, notice: 'Quiz was successfully created.' }
-        format.json { render :show, status: :created, location: @quiz }
       else
-        format.html { render :new }
-        format.json { render json: @quiz.errors, status: :unprocessable_entity }
+        render "edit"
       end
     end
   end

@@ -16,15 +16,11 @@
     <%= form.text_field :title, id: :quiz_title %>
   </div>
 
-  <div class="field">
-    <%= form.label :published %>
-    <%= form.check_box :published, id: :quiz_published %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, id: :quiz_user_id %>
-  </div>
+  <% if quiz.questions.length >= 1 %>
+    <div class="field">
+    <%= select_tag(:published, options_for_select({'Publish' => true, 'Not Ready yet' => false})) %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>
