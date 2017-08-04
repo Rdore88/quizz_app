@@ -3,11 +3,16 @@
 <%= render 'form', quiz: @quiz %>
 
 <%= link_to "Create Question", new_quiz_question_path(@quiz) %>
+<br>
 
 
 <% @quiz.questions.each do |question|%>
   <%= question.question %>
+  <%= link_to "Edit Question", edit_quiz_question_path(@quiz, question) %>
+  <%= link_to "Delete Question", quiz_question_path(@quiz, question), method: :delete %>
+  <br><br>
   <%= link_to "Create New Answer", new_quiz_question_answer_path(@quiz, question) %>
+  <br><br>
   <% question.answers.each do |answer| %>
     <%= answer.answer %>
     <% if answer.correct %>

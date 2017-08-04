@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :find_quiz,
+  before_action :find_quiz
+  before_action :find_question, only: [:edit, :update, :destroy]
 
   def new
     @question = @quiz.questions.build
@@ -15,8 +16,30 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def edit
+    @question
+    @quiz
+  end
+
+  def update
+    if @question.update(question_params)
+      redirect_to edit_quiz_path(@quiz)
+    else
+      render "edit"
+    end
+  end
+
+  def destroy
+    @question.delete
+    redirect_to edit_quiz_path(@quiz)
+  end
+
 
   private
+
+  def find_question
+    @question = Question.find(params[:id])
+  end
 
   def find_quiz
     @quiz = Quiz.find(params[:quiz_id])
