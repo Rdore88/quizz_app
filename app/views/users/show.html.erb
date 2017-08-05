@@ -1,1 +1,12 @@
 <h1>User Profile for <%= current_user.name %></h1>
+
+<ol>
+<% @quizzes.each do |quiz|%>
+  <% if quiz.published %>
+    <li>
+      <%= quiz.title %>
+      <%= link_to "Take Quiz", quiz %>
+    </li>
+  <% end %>
+<% end %>
+</ol>

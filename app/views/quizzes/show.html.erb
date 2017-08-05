@@ -5,7 +5,28 @@
   <%= @quiz.title %>
 </p>
 
+<% quiz_results = current_user.results.map {|result| result.quiz_id == @quiz.id } %>
+
+<% current_question = @quiz.questions[quiz_results.length] %>
+<h3><%= current_question.question %></h3>
+<% result = Result.new %>
+<% current_question.answers.each do |answer| %>
+  <%= form_for [result] do |f| %>
+    <% f.hidden_field "quiz_id", :value => @quiz.id%>
+    <% f.hidden_field "answer_id", :value => answer.id %>
+    <%= f.submit answer.answer %>
+  <% end %>
+  <br>
+<% end %>
 
 
-<%= link_to 'Edit', edit_quiz_path(@quiz) %> |
-<%= link_to 'Back', quizzes_path %>
+
+
+
+
+
+<% if current_user.admin && !@quiz.published %>
+  <%= link_to 'Edit', edit_quiz_path(@quiz) %> |
+  <%= link_to 'Back to quizzes', quizzes_path %>
+<% end %>
+<%= link_to "Back", current_user %>

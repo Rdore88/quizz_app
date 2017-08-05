@@ -13,6 +13,7 @@
         <%= link_to "Logout", sessions_path %>
         <% if current_user.admin %>
           <%= link_to "Create new Quiz", new_quiz_path %>
+          <%= link_to "Quizzes", quizzes_path %>
         <% end %>
       <% else %>
         <%= link_to "login", new_session_path %>
