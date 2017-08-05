@@ -3,7 +3,6 @@ class ResultsController < ApplicationController
 
   def create
     @result = Result.new(user_id: current_user.id, quiz_id: params[:result][:quiz_id] , answer_id: params[:result][:answer_id])
-    binding.pry
     if @result.save
       redirect_to @quiz
     else
@@ -14,6 +13,6 @@ class ResultsController < ApplicationController
   private
 
   def find_quiz
-    @quiz = Quiz.find(params[:quiz_id])
+    @quiz = Quiz.find(params[:result][:quiz_id])
   end
 end

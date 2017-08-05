@@ -5,18 +5,37 @@
   <%= @quiz.title %>
 </p>
 
-<% quiz_results = current_user.results.map {|result| result.quiz_id == @quiz.id } %>
+<% quiz_results = current_user.results.select {|result| result.quiz_id == @quiz.id } %>
 
-<% current_question = @quiz.questions[quiz_results.length] %>
-<h3><%= current_question.question %></h3>
-<% result = Result.new %>
-<% current_question.answers.each do |answer| %>
-  <%= form_for [result] do |f| %>
-    <%= f.hidden_field "quiz_id", :value => @quiz.id%>
-    <%= f.hidden_field "answer_id", :value => answer.id %>
-    <%= f.submit answer.answer %>
+<% if quiz_results.length < @quiz.questions.length %>
+  <% current_question = @quiz.questions[quiz_results.length] %>
+  <h3><%= current_question.question %></h3>
+  <% result = Result.new %>
+  <% current_question.answers.each do |answer| %>
+    <%= form_for [result] do |f| %>
+      <%= f.hidden_field "quiz_id", :value => @quiz.id%>
+      <%= f.hidden_field "answer_id", :value => answer.id %>
+      <%= f.submit answer.answer %>
+    <% end %>
+    <br>
   <% end %>
-  <br>
+<% else %>
+
+<h3>Your finished this quiz. Here are your results</h3>
+<% correct_answers = quiz_results.select {|result| result.answer.correct} %>
+<% wrong_answers = quiz_results.select {|result| !result.answer.correct} %>
+
+<% quiz_results.each do |result|%>
+  <%= result.answer.answer %>
+  <% if result.answer.correct %>
+    <span>Correct Answer</span>
+<%  end %>
+<br>
+<% end %>
+<% score =  (correct_answers.length.to_f/quiz_results.length.to_f) * 100%>
+<h3>Your got a <%= score.to_i %>%</h3>
+
+
 <% end %>
 
 
