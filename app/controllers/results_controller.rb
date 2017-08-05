@@ -1,6 +1,19 @@
 class ResultsController < ApplicationController
+  before_action :find_quiz
 
   def create
-    #code
+    @result = Result.new(user_id: current_user.id, quiz_id: params[:result][:quiz_id] , answer_id: params[:result][:answer_id])
+    binding.pry
+    if @result.save
+      redirect_to @quiz
+    else
+      redirect_to @quiz
+    end
+  end
+
+  private
+
+  def find_quiz
+    @quiz = Quiz.find(params[:quiz_id])
   end
 end

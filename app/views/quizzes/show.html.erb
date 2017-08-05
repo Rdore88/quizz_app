@@ -12,8 +12,8 @@
 <% result = Result.new %>
 <% current_question.answers.each do |answer| %>
   <%= form_for [result] do |f| %>
-    <% f.hidden_field "quiz_id", :value => @quiz.id%>
-    <% f.hidden_field "answer_id", :value => answer.id %>
+    <%= f.hidden_field "quiz_id", :value => @quiz.id%>
+    <%= f.hidden_field "answer_id", :value => answer.id %>
     <%= f.submit answer.answer %>
   <% end %>
   <br>
